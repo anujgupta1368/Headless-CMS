@@ -8,6 +8,9 @@ const Navbar = () => {
         <div className="text-white font-bold text-xl">
           <Link to="/" className="text-white hover:text-gray-300">Home</Link>
         </div>
+        <div className='text-2xl text-white'>
+          Headless CMS
+        </div>
         <ul className="flex space-x-4">
           <li>
             <Link to="/createEntity" className="text-white text-lg hover:text-gray-300">Create Entity</Link>

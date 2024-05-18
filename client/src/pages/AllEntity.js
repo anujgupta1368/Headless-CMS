@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { handleDeleteTable, handleFetchAllTables, handlefetchTableDetails } from '../services/Api';
 import TableView from '../components/TableView';
 import InsertData from '../components/InsertData';
+import { toast } from 'react-toastify';
 
 const AllEntity = () => {
   const [tablesData, setTablesData] = useState([]);
@@ -40,6 +41,12 @@ const AllEntity = () => {
   const handleDelete = async (tableName) => {
     try {
       const response = await handleDeleteTable(tableName);
+      if(response.error){
+        toast.error(response.message, {autoClose:2000});
+      }
+      else{
+        window.location.reload();
+      }
     } catch (error) {
       console.error('Error deleting table', error);
     }

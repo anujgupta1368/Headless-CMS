@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { handleDeleteTableData, handlefetchTableDetails, handleUpdateTableData } from '../services/Api'; // Assume you have an API function to update the row
+import { toast } from 'react-toastify';
 
 const TableView = ({
     isOpen,
@@ -45,14 +46,12 @@ const TableView = ({
     try {
       const response = await handleUpdateTableData(rowValues);
       if (response) {
-        // Update the table details with the new values
         const updatedDetails = [...tableDetails];
         updatedDetails[rowIndex] = rowValues;
         setTableDetails(updatedDetails);
-
-        // Reset editing state
         setEditingRow(null);
         setRowValues({});
+        toast.success(response.message, {autoClose:2000});
       }
     } catch (error) {
       console.error('Error saving data:', error);
@@ -71,6 +70,7 @@ const TableView = ({
         // Remove the deleted row from table details
         const updatedDetails = tableDetails.filter((_, index) => index !== rowIndex);
         setTableDetails(updatedDetails);
+        toast.success(response.message, {autoClose:2000});
       }
     } catch (error) {
       console.error('Error deleting data:', error);

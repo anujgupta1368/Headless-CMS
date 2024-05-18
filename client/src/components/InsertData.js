@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { handleInsertTableData, handlefetchTableDetails } from '../services/Api'; // Assume you have an API function to insert data
+import { toast } from 'react-toastify';
 
 const InsertData = ({
     isOpen,
@@ -56,8 +57,12 @@ const InsertData = ({
     }
     try {
       const response = await handleInsertTableData(data);
-      if(!response.error){
+      if(response.error){
+        toast.error(response.message, {autoClose:2000});
+      }
+      else{
         isClose();
+        toast.success(response.message, {autoClose:2000});
       }
     } catch (error) {
       console.error('Error adding new entries:', error);

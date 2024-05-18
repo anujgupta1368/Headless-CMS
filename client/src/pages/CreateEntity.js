@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { handleCreateEntity } from '../services/Api';
+import { toast } from 'react-toastify';
 
 const CreateEntity = () => {
   const [entityName, setEntityName] = useState('');
   const [columns, setColumns] = useState([{ name: '', type: '' }]);
   const [errors, setErrors] = useState({ entityName: '', columns: [] });
-  const [message, setMessage] = useState('');
-
   const sqlAttributeTypes = [
     "CHAR",
     "VARCHAR(255)",
@@ -70,10 +69,10 @@ const CreateEntity = () => {
     };
     const response = await handleCreateEntity(entityData);
     if(response.error){
-      setMessage(response.error + '. ' + response.message);
+      toast.error(response.error + '. ' + response.message, {autoClose:2000});
     }
     else{
-      setMessage(response.message);
+      toast.success(response.message, {autoClose:2000});
     }
     setEntityName('');
     setColumns([{ name: '', type: '' }]);
@@ -175,7 +174,6 @@ const CreateEntity = () => {
         <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 ml-2">Submit</button>
       </form>
       <div>
-      {message && <p className="text-red-500">{message}</p>}
       </div>
     </div>
   );

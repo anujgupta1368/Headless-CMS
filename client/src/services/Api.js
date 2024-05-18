@@ -43,9 +43,8 @@ export const handleDeleteTable = async (table_name) =>{
           },
           body: JSON.stringify({ table_name: table_name })
         });
-        if(response.ok){
-          window.location.reload();
-        }
+        const data = await response.json();
+        return data;
       } catch (error) {
         console.error('Error deleting table:', error.message);
     }
